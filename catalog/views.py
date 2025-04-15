@@ -21,3 +21,4 @@ def posted_info(request):
                                                          'phone': phone, 'message': message})
     else:
         return render(request, 'contacts.html')
+# holy holy
