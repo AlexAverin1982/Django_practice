@@ -78,18 +78,21 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 load_dotenv()
 SECRET_KEY = os.getenv("SECRET_KEY")
-dbname = os.getenv("DBNAME")
-dbuser = os.getenv("USER")
+name = os.getenv("NAME")
+user = os.getenv("USER")
 dbuserpass = os.getenv("PASSWORD")
+host = os.getenv("HOST")
+port = os.getenv("PORT")
+engine = os.getenv("ENGINE")
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': dbname,
-        'USER': dbuser,
+        'NAME': name,
+        'USER': user,
         'PASSWORD': dbuserpass,
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'HOST': host,
+        'PORT': port,
     }
 }
 
@@ -128,6 +131,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = "static/"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = "/media/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
