@@ -1,0 +1,54 @@
+[
+{
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+        "name": "Огурцы грунтовые пупырчатые",
+        "description": "короткие толстенькие",
+        "image": "",
+        "category": 5,
+        "price": 72.99,
+        "created_at": "2025-04-21T09:55:28.018Z",
+        "updated_at": "2025-04-21T09:55:28.018Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+        "name": "Огурцы гладкие парниковые",
+        "description": "длинные прямые",
+        "image": "",
+        "category": 5,
+        "price": 68.99,
+        "created_at": "2025-04-21T09:56:06.299Z",
+        "updated_at": "2025-04-21T09:56:06.299Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+        "name": "Помидоры черри",
+        "description": "мелкие оранжевые",
+        "image": "",
+        "category": 5,
+        "price": 148.99,
+        "created_at": "2025-04-21T09:56:41.331Z",
+        "updated_at": "2025-04-21T09:56:41.331Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 6,
+    "fields": {
+        "name": "Сок яблочный",
+        "description": "тетрапак 0,5 л",
+        "image": "",
+        "category": 6,
+        "price": 49.99,
+        "created_at": "2025-04-21T10:09:47.159Z",
+        "updated_at": "2025-04-21T10:09:47.159Z"
+    }
+}
+]
