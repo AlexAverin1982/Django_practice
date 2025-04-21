@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from catalog.models import Product, Category
 
+
 class Command(BaseCommand):
     help = 'Add test products to the database'
 
@@ -9,10 +10,12 @@ class Command(BaseCommand):
         cat_veg, _ = Category.objects.get_or_create(name='Овощи свежие')
 
         vegetables = [
-            {'name': 'Картофель Мордова', 'price': 90.99, 'category': cat_veg},
-            {'name': 'Огурцы грунтовые', 'price': 85.99, 'category': cat_veg},
-            {'name': 'Огурцы гладкие', 'price': 70.99, 'category': cat_veg},
-            {'name': 'Лук репчатый', 'price': 14.99, 'category': cat_veg},
+            {'name': 'Картофель Мордова', 'price': 90.99, 'description': 'Описание продукта', 'category': cat_veg},
+            {'name': 'Огурцы грунтовые', 'price': 85.99, 'description': 'Описание продукта', 'category': cat_veg},
+            {'name': 'Огурцы гладкие', 'price': 70.99, 'description': 'Описание продукта', 'category': cat_veg},
+            {'name': 'Лук репчатый', 'price': 14.99, 'description': 'Описание продукта', 'category': cat_veg},
+            {'name': 'Помидоры парниковые', 'price': 124.99, 'description': 'Описание продукта', 'category': cat_veg},
+            {'name': 'Помидоры черри', 'price': 184.99, 'description': 'Описание продукта', 'category': cat_veg},
         ]
 
         for v_data in vegetables:

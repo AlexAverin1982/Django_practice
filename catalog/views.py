@@ -1,15 +1,18 @@
 from django.shortcuts import render
+from .models import Product, ContactsInfo
 
 
 def home(request):
-    return render(request, 'home.html')
+    latest_products = Product.objects.order_by('-created_at')[:5]
+    return render(request, 'home.html', context={'items': latest_products})
 
 
 def contacts(request):
     if request.method == 'POST':
         return render(request, 'response.html')
     else:
-        return render(request, 'contacts.html')
+        contacts = ContactsInfo.objects.order_by('-updated_at')[0]
+        return render(request, 'contacts.html', context={'contacts': contacts})
 
 
 def posted_info(request):
@@ -21,4 +24,3 @@ def posted_info(request):
                                                          'phone': phone, 'message': message})
     else:
         return render(request, 'contacts.html')
-# holy holy

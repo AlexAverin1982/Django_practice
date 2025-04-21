@@ -23,34 +23,36 @@
     <h1 class="display-4">Контакты</h1>
 </div>
 
-<div class="container">
-    <div class="row text-start">
-        <div class="col-lg-9 col-md-6 col-sm-12">
-            <div class="card mb-4 box-shadow">
+<div class="container-fluid">
+<!--<div class="container-fluid d-flex pb-5 text-center mt-5 mx-auto text-center">-->
+    <div class="row flex-nowrap d-flex justify-content-evenly pb-5">
+        <div class="col-4 ms-2">
+            <div class="card box-shadow w-100 text-start">
                 <div class="card-body">
                     <table class="table table-striped">
                         <tr>
-                            <td class="w-25">Страна</td>
-                            <td>USA</td>
+                            <td class="w-50">E-mail</td>
+                            <td>{{ contacts.email }}</td>
                         </tr>
                         <tr>
-                            <td class="w-25">ИНН</td>
-                            <td>91-1144442</td>
+                            <td class="w-25">Telegram</td>
+                            <td>{{ contacts.telegram }}</td>
                         </tr>
                         <tr>
-                            <td class="w-25">Адрес</td>
-                            <td>Redmond,WA,98052-6399</td>
+                            <td class="w-25">VK Group</td>
+                            <td>{{ contacts.vk_group }}</td>
                         </tr>
                     </table>
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-6 col-sm-12">
-            <div class="card mb-4 box-shadow">
+        <div class="col-7 me-1">
+        <!--div class="col-lg-10 col-md-6 col-sm-12"-->
+            <div class="card h-100 box-shadow w-100">
                 <div class="card-header">
                     <h4 class="my-0 font-weight-normal">Свяжитесь с нами</h4>
                 </div>
-                <div class="card-body">
+                <div class="card-body text-start pb-3">
                     <form method="post" action="posted_info" class="form-floating">
                         {% csrf_token %}
                         <div class="mb-3">
@@ -65,14 +67,15 @@
                             <label for="message">Сообщение</label>
                             <textarea type="text" name="message" class="form-control" id="message" placeholder="Контактный телефон" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Отправить</button>
+                        <div class="align-items-end my-1">
+                        <button type="submit" class="btn btn-lg btn-block btn-outline-primary px-4 mt-4">Отправить</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
-</div>
+    </div>
 {% include "bottom.html" %}
 
 <!-- Подключите статичеcкие файлы со скриптами Bootstrap -->
