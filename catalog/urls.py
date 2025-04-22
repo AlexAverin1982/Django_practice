@@ -28,5 +28,5 @@ urlpatterns = [
     path("contacts/posted_info", views.posted_info, name="posted_info"),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# if settings.DEBUG:
+#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
