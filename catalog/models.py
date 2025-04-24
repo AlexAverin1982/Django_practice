@@ -21,14 +21,19 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+    images_dir='/static/images/'
+
     name = models.CharField(
         max_length=150, db_column="name", verbose_name="Наименование"
     )
     description = models.TextField(
         max_length=500, blank=True, db_column="description", verbose_name="Описание"
     )
-    image = models.ImageField(
-        verbose_name="Изображение", db_column="image", blank=True, upload_to="photos/"
+    # image = models.ImageField(
+    #     verbose_name="Изображение", db_column="image", blank=True, upload_to="images/"
+    # )
+    image = models.CharField(
+        verbose_name="Изображение", db_column="image", blank=True
     )
     category = models.ForeignKey(
         Category,
@@ -52,8 +57,8 @@ class Product(models.Model):
         return f"{self.name}"
 
     class Meta:
-        verbose_name = "продукт"
-        verbose_name_plural = "продукты"
+        verbose_name = "товар"
+        verbose_name_plural = "товары"
         ordering = ["name"]
         db_table = "product"
 

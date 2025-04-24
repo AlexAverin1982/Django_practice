@@ -1,13 +1,23 @@
-<div class="container-fluid d-flex align-items-center py-3 bg-white border-bottom box-shadow" style="width: 100%">
-    <h5 class="my-0 mr-md-auto font-weight-normal ps-2">Skystore</h5>
+<div class="container-fluid d-flex align-items-center py-1 bg-white border-bottom box-shadow">
+    <h5 class="my-0 mr-md-auto font-weight-normal ps-2 me-1 text-nowrap">Sky-price</h5>
     <nav class="container-fluid ms-2 me-1 px-2">
         <div class="row">
-            <div class="col-2">
+            <div class="col-10">
                 <a class="p-2 btn btn-outline-primary" href="/">Каталог</a>
                 <a class="p-2 btn btn-outline-primary" href="/contacts/">Контакты</a>
             </div>
-            <div class="col text-end">
-                <a class="p-2 btn btn-outline-primary" href="/admin/">Админка</a>
+            <div class="d-flex col-2 justify-content-end">
+                <div class="dropdown">
+                    <a class="btn btn-outline-success dropdown-toggle p-2" href="#" role="button" id="dropdownnew"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Добавить
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" href="/new_category/">категорию</a></li>
+                        <li><a class="dropdown-item" href="/new_product/">товар</a></li>
+                    </ul>
+                </div>
+                <a class="ms-3 btn btn-outline-primary" href="/admin/">Админка</a>
             </div>
         </div>
     </nav>
