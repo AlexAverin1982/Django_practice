@@ -4,22 +4,29 @@ from django.core.files.storage import FileSystemStorage
 from django.core.files.base import ContentFile
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from django.views import generic
-from django.urls import reverse
+# from django.views import generic
+from django.core.paginator import Paginator
 
 from config.settings import BASE_DIR
 from .models import ContactsInfo, Product, Category
 from typing import Any
 
 
-class ProductDetailView(generic.DetailView):
-    model = Product
-    template_name = "product_details.html"
+# class ProductDetailView(generic.DetailView):
+#     model = Product
+#     template_name = "product_details.html"
 
 
 def home(request) -> HTTPResponse | Any:
-    latest_products = Product.objects.order_by("-created_at")       # [:5]
-    return render(request, "home.html", context={"items": latest_products})
+    latest_products = Product.objects.all().order_by("-created_at")       # [:5]
+
+    paginator = Paginator(latest_products, 5)
+
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    return render(request, "home.html", {"page_obj": page_obj})
+
+    # return render(request, "home.html", context={"items": latest_products})
 
 
 def contacts(request) -> HTTPResponse | Any:
@@ -137,9 +144,9 @@ def add_product(request) -> HTTPResponse | Any:
         return render(request, "new_product.html")
 
 
-# def details(request, product_id):
-#     product = Product.objects.get(id=product_id)
-#     return render(request, "details.html", context={"product": product})
+def details(request, product_id):
+    product = Product.objects.get(id=product_id)
+    return render(request, "product_details.html", context={"product": product})
 
 
 def posted_info(request) -> HTTPResponse | Any:

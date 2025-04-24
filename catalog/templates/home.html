@@ -9,7 +9,7 @@
 <div class="container-fluid pb-3">
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-5">
-        {% for item in items %}
+        {% for item in page_obj %}
         <div class="col gy-3">
             <div class="card text-center" style="width: 25rem; height: 40rem;">
                 <div class="d-flex justify-content-center">
@@ -37,6 +37,27 @@
             </div>
         </div>
         {% endfor %}
+    </div>
+
+    <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1" style="text-decoration: none; font-size: 1.5em;">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}" style="text-decoration: none; font-size: 1.5em;">
+                previous
+            </a>
+        {% endif %}
+
+        <span class="current" style="text-decoration: none; font-size: 1.5em;">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }} " style="text-decoration: none; font-size: 1.5em;">next</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}"
+           style="text-decoration: none; font-size: 1.5em;">last &raquo;</a>
+        {% endif %}
+    </span>
     </div>
 </div>
 {% endblock %}
