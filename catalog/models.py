@@ -29,12 +29,12 @@ class Product(models.Model):
     description = models.TextField(
         max_length=500, blank=True, db_column="description", verbose_name="Описание"
     )
-    # image = models.ImageField(
-    #     verbose_name="Изображение", db_column="image", blank=True, upload_to="images/"
-    # )
-    image = models.CharField(
-        verbose_name="Изображение", db_column="image", blank=True
+    image = models.ImageField(
+        verbose_name="Изображение", db_column="image", blank=True, upload_to="static/images/"
     )
+    # image = models.CharField(
+    #     verbose_name="Изображение", db_column="image", blank=True
+    # )
     category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,

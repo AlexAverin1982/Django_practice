@@ -33,7 +33,10 @@ def contacts(request) -> HTTPResponse | Any:
     if request.method == "POST":
         return render(request, "response.html")
     else:
-        contacts = ContactsInfo.objects.order_by("-updated_at")[0]
+        try:
+            contacts = ContactsInfo.objects.order_by("-updated_at")[0]
+        except:
+            contacts = None
         return render(request, "contacts.html", context={"contacts": contacts})
 
 
@@ -73,7 +76,6 @@ def add_category(request) -> HTTPResponse | Any:
 def new_product(request) -> HTTPResponse | Any:
     categories = Category.objects.all().order_by('name')
     return render(request, "new_product.html", context={'categories': categories})
-
 
 def add_product(request) -> HTTPResponse | Any:
     if request.method == "POST":
@@ -123,7 +125,7 @@ def add_product(request) -> HTTPResponse | Any:
                                     new_product_obj = Product.objects.create(name=product_name,
                                                                              description=product_desc,
                                                                              price=product_price, category=category,
-                                                                             image=Product.images_dir+file_name)
+                                                                             image=request.FILES.get("image_file"))
                                     new_product_obj.save()
                                 except Exception as e:
                                     error_code = 105  # creation failed
