@@ -22,17 +22,21 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path("", views.ProductListView.as_view(), name="home"),
+    path("details/<int:pk>/", views.ProductDetailView.as_view(), name="product_details"),
+    path("new_product/", views.ProductCreateView.as_view(), name="new_product"),
+    path("edit/<int:pk>/", views.ProductUpdateView.as_view(), name="edit_product"),
+    path("new_category/", views.CategoryCreateView.as_view(), name="new_category"),
+    path("contacts/", views.ContactsView.as_view(), name="contacts"),
+    path("feedback/", views.FeedbackFormView.as_view(), name="feedback"),
+    path("posted_info/<int:pk>/", views.PostedMessageView.as_view(), name="posted_info"),
     # path("admin/", admin.site.urls),
-    path("", views.home, name="home"),
-    path("contacts/", views.contacts, name="contacts"),
-    path("contacts/posted_info", views.posted_info, name="posted_info"),
-    # path("details/<int:pk>/", views.ProductDetailView.as_view(), name="product_details"),
-    path("details/<int:product_id>", views.details, name="product_details"),
-    path("new_category/", views.new_category, name="new_category"),
-    path("new_category/add", views.add_category, name="add_category"),
-    path("new_product/", views.new_product, name="new_product"),
-    path("new_product/add", views.add_product, name="add_product"),
+    # path("", views.home, name="home"),
+    # path("new_product/", views.new_product, name="new_product"),
+    # path("contacts/", views.contacts, name="contacts"),
+    # path("details/<int:product_id>", views.details, name="product_details"),
+    # path("new_category/", views.new_category, name="new_category"),
+    # path("new_category/add", views.add_category, name="add_category"),
+    # path("new_product/add", views.add_product, name="add_product"),
 ]
 
-# if settings.DEBUG:
-#     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

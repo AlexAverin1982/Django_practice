@@ -1,9 +1,6 @@
 {% extends "base.html" %}
 {% block title %} {{ product.name }} {% endblock %}
 {% block content %}
-
-
-{% csrf_token %}
 <div class="container-fluid d-flex border">
     <div class="row">
         <div class="col col-4 border border-primary ms-1 text-center">
@@ -36,5 +33,6 @@
 <button type="button" class="btn btn-lg btn-outline-primary mx-2 px-5 m-3 float-bottom"
         onClick="javascript:history.go(-1);">Назад
 </button>
+<a href="/edit/{{ product.id }}" class="btn btn-lg btn-outline-primary mx-2 px-5 m-3 float-bottom">Изменить</a>
 
 {% endblock %}

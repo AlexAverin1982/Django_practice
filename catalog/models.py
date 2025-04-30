@@ -90,3 +90,25 @@ class ContactsInfo(models.Model):
         verbose_name_plural = "Контакты"
         ordering = ["updated_at", "email", "telegram"]
         db_table = "contacts"
+
+class FeedbackMessage(models.Model):
+
+    name = models.CharField(
+        max_length=150, verbose_name="Ваше имя"
+    )
+    email = models.EmailField(db_column="email", verbose_name="Электронная почта")
+
+    message = models.TextField(
+        max_length=5000, blank=False, verbose_name="Сообщение"
+    )
+
+    created_at = models.DateTimeField(verbose_name='Дата создания', db_default=Now())
+
+    def __str__(self) -> str:
+        return f"Сообщение пользователя {self.name}, отправленное {self.created_at}"
+
+    class Meta:
+        verbose_name = "Сообщение пользователя"
+        verbose_name_plural = "Сообщения пользователей"
+        ordering = ["name", "created_at", "email"]
+        db_table = "feedback"
