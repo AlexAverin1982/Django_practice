@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %} {{ product.name }} {% endblock %}
+{% block content %}
+
+
+{% csrf_token %}
+<div class="container-fluid d-flex border">
+    <div class="row">
+        <div class="col col-4 border border-primary ms-1 text-center">
+            <img src={{ product.image.url }} class="card-img-top" alt="image" style="width: 40rem; height: 40rem;">
+        </div>
+        <div class="col">
+            <div class="m-2">
+                <div class="row" style="height: 10rem;">
+                    <div class="col">
+                        <h2>{{ product.name }}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <h3>{{ product.price }} ₽</h3>
+            </div>
+            <div class="d-flex align-content-end flex-wrap bd-highlight mb-5">
+                <h4>{{ product.description }}</h4>
+            </div>
+            <div class="d-flex align-content-end flex-wrap bd-highlight">
+                <button type="button" class="btn btn-lg btn-primary mx-2 px-5 float-bottom mt-5 g-0">
+                    Купить
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<button type="button" class="btn btn-lg btn-outline-primary mx-2 px-5 m-3 float-bottom"
+        onClick="javascript:history.go(-1);">Назад
+</button>
+
+{% endblock %}

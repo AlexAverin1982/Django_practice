@@ -26,6 +26,12 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("contacts/", views.contacts, name="contacts"),
     path("contacts/posted_info", views.posted_info, name="posted_info"),
+    # path("details/<int:pk>/", views.ProductDetailView.as_view(), name="product_details"),
+    path("details/<int:product_id>", views.details, name="product_details"),
+    path("new_category/", views.new_category, name="new_category"),
+    path("new_category/add", views.add_category, name="add_category"),
+    path("new_product/", views.new_product, name="new_product"),
+    path("new_product/add", views.add_product, name="add_product"),
 ]
 
 # if settings.DEBUG:
