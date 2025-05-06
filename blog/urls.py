@@ -22,21 +22,29 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.ProductListView.as_view(), name="home"),
-    path("details/<int:pk>/", views.ProductDetailView.as_view(), name="product_details"),
-    path("new_product/", views.ProductCreateView.as_view(), name="new_product"),
-    path("edit/<int:pk>/", views.ProductUpdateView.as_view(), name="edit_product"),
-    path("new_category/", views.CategoryCreateView.as_view(), name="new_category"),
-    path("contacts/", views.ContactsView.as_view(), name="contacts"),
-    path("feedback/", views.FeedbackFormView.as_view(), name="feedback"),
-    path("posted_info/<int:pk>/", views.PostedMessageView.as_view(), name="posted_info"),
-    # path("admin/", admin.site.urls),
-    # path("", views.home, name="home"),
-    # path("new_product/", views.new_product, name="new_product"),
-    # path("contacts/", views.contacts, name="contacts"),
-    # path("details/<int:product_id>", views.details, name="product_details"),
-    # path("new_category/", views.new_category, name="new_category"),
-    # path("new_category/add", views.add_category, name="add_category"),
-    # path("new_product/add", views.add_product, name="add_product"),
+    path("", views.BlogRecordListView.as_view(), name="blog"),
+    path("add_record/", views.BlogRecordCreateView.as_view(), name="add_blog_record"),
+    path("blog_record/<int:pk>/", views.BlogRecordView.as_view(), name="record_content"),
+    path("edit/<int:pk>/", views.BlogRecordUpdateView.as_view(), name="edit_BlogRecord"),
+
 ]
 
+"""
+path("details/<int:pk>/", views.BlogRecordDetailView.as_view(), name="BlogRecord_details"),
+path("new_BlogRecord/", views.BlogRecordCreateView.as_view(), name="new_BlogRecord"),
+path("edit/<int:pk>/", views.BlogRecordUpdateView.as_view(), name="edit_BlogRecord"),
+path("new_category/", views.CategoryCreateView.as_view(), name="new_category"),
+path("contacts/", views.ContactsView.as_view(), name="contacts"),
+path("feedback/", views.FeedbackFormView.as_view(), name="feedback"),
+path("posted_info/<int:pk>/", views.PostedMessageView.as_view(), name="posted_info"),
+# path("admin/", admin.site.urls),
+# path("", views.home, name="home"),
+# path("new_BlogRecord/", views.new_BlogRecord, name="new_BlogRecord"),
+# path("contacts/", views.contacts, name="contacts"),
+# path("details/<int:BlogRecord_id>", views.details, name="BlogRecord_details"),
+# path("new_category/", views.new_category, name="new_category"),
+# path("new_category/add", views.add_category, name="add_category"),
+# path("new_BlogRecord/add", views.add_BlogRecord, name="add_BlogRecord"),
+]
+
+"""

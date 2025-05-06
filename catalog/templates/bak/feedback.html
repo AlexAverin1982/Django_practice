@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Напишите нам{% endblock %}
+{% block content %}
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Напишите нам</h1>
+</div>
+
+<form method="post" class="form-floating">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <div class="align-items-end my-1">
+        <button type="submit" class="btn btn-lg btn-block btn-outline-primary px-4 mt-4">Отправить
+        </button>
+    </div>
+</form>
+{% endblock %}

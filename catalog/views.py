@@ -105,6 +105,7 @@ class FeedbackFormView(generic.CreateView):
         # return super().form_valid(form)
 
 
+
 """
 def home(request) -> HTTPResponse | Any:
     latest_products = Product.objects.all().order_by("-created_at")       # [:5]
