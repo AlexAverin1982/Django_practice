@@ -2,13 +2,14 @@ from http.client import HTTPResponse
 # from django.core.files.storage import FileSystemStorage
 # from django.core.files.base import ContentFile
 from django.http import HttpResponseRedirect
-# from django.shortcuts import render
+from django.shortcuts import render
 from django.views import generic
 from django.urls import reverse
 # from django.core.paginator import Paginator
 from django.urls import reverse_lazy
 from .models import ContactsInfo, Product, Category, FeedbackMessage
-
+from django.conf import settings
+from django.core.mail import send_mail
 
 class ProductDetailView(generic.DetailView):
     model = Product
@@ -104,7 +105,9 @@ class FeedbackFormView(generic.CreateView):
         return HttpResponseRedirect(reverse('posted_info', args=(new_message.pk,)))
         # return super().form_valid(form)
 
-
+def send_letter(request) -> None:
+    send_mail('Тема', 'Тело письма', settings.EMAIL_HOST_USER, [settings.ADMIN_MAIL])
+    return render(request, "home.html")
 
 """
 def home(request) -> HTTPResponse | Any:

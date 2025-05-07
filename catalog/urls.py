@@ -30,6 +30,7 @@ urlpatterns = [
     path("contacts/", views.ContactsView.as_view(), name="contacts"),
     path("feedback/", views.FeedbackFormView.as_view(), name="feedback"),
     path("posted_info/<int:pk>/", views.PostedMessageView.as_view(), name="posted_info"),
+    path("send_letter/", views.send_letter, name="send_letter"),
     # path("admin/", admin.site.urls),
     # path("", views.home, name="home"),
     # path("new_product/", views.new_product, name="new_product"),

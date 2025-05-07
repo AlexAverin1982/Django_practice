@@ -18,7 +18,7 @@
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
     {% load static %}
-    <link rel="icon" href="{% static 'favicon.ico' %}?v=2" type="image/x-icon">
+    <link rel ="icon" href="{% static 'favicon.ico' %}?v=2" type="image/x-icon">
     <style>
         .nav-item {
             width: 100%;
@@ -38,14 +38,15 @@
 {% include "top.html" %}
 
 
+
 {% block content %}{% endblock %}
 {% block navigation %}
 {% endblock %}
-<div class="row h-25">
-    <div class="col">
-        {% include "bottom.html" %}
+    <div class="row h-25">
+        <div class="col">
+            {% include "bottom.html" %}
+        </div>
     </div>
-</div>
 
 <!-- Подключение Bootstrap JS -->
 <!--<script src="/static/js/bootstrap.bundle.min.js"></script>-->

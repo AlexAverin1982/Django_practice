@@ -1,6 +1,7 @@
+from django.contrib.admin.widgets import url_params_from_lookup_dict
 from django.http import Http404
 from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views import generic
 from django.db.models import F
 
@@ -50,6 +51,7 @@ class BlogRecordView(generic.DetailView):
         # Дополнительная логика (например,  изменения значений полей)
         # if not obj.is_active:
         #     raise Http404("Object not found")
+        print(queryset)
         obj.increment_views_count()
         return obj
     
@@ -58,7 +60,6 @@ class BlogRecordUpdateView(generic.UpdateView):
     model = BlogRecord
     fields = ['title', 'preview', 'text', 'is_published']
     template_name = 'new_record.html'
-    success_url = reverse_lazy('blog')
     extra_context = {
         'page_title': 'Редактирование записи',
         'editing_mode': True,
@@ -68,3 +69,6 @@ class BlogRecordUpdateView(generic.UpdateView):
         form.save()
         return super().form_valid(form)
 
+    def get_success_url(self):
+        # print(self.kwargs)
+        return reverse("record_content", kwargs=self.kwargs)
