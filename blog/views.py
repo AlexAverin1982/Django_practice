@@ -72,3 +72,8 @@ class BlogRecordUpdateView(generic.UpdateView):
     def get_success_url(self):
         # print(self.kwargs)
         return reverse("record_content", kwargs=self.kwargs)
+
+class BlogRecordDeleteView(generic.DeleteView):
+    model = BlogRecord
+    success_url = reverse_lazy("blog")
+    template_name = 'delete_record.html'
