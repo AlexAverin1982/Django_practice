@@ -1,9 +1,9 @@
-from django.contrib.admin.widgets import url_params_from_lookup_dict
-from django.http import Http404
-from django.shortcuts import render
+# from django.contrib.admin.widgets import url_params_from_lookup_dict
+# from django.http import Http404
+# from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views import generic
-from django.db.models import F
+# from django.db.models import F
 
 from blog.models import BlogRecord
 
@@ -35,8 +35,11 @@ class BlogRecordListView(generic.ListView):
         # q = self.request.GET.get('filter', '')
         # if not q:
         #     return self.model.objects.all()
-        return self.model.objects.order_by("-created_at")
-
+        # return self.model.objects.filter("is_published").order_by("-created_at")
+        queryset = super().get_queryset()
+        # filter_param = self.request.GET.get('filter_param')
+        # if filter_param:
+        return queryset.filter(is_published=True).order_by("-created_at")
         # return self.model.objects.order_by("name")
 
 
@@ -54,7 +57,7 @@ class BlogRecordView(generic.DetailView):
         print(queryset)
         obj.increment_views_count()
         return obj
-    
+
 
 class BlogRecordUpdateView(generic.UpdateView):
     model = BlogRecord
@@ -72,6 +75,7 @@ class BlogRecordUpdateView(generic.UpdateView):
     def get_success_url(self):
         # print(self.kwargs)
         return reverse("record_content", kwargs=self.kwargs)
+
 
 class BlogRecordDeleteView(generic.DeleteView):
     model = BlogRecord

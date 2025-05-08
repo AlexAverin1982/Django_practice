@@ -105,6 +105,12 @@ class FeedbackFormView(generic.CreateView):
         return HttpResponseRedirect(reverse('posted_info', args=(new_message.pk,)))
         # return super().form_valid(form)
 
+
+class ProductDeleteView(generic.DeleteView):
+    model = Product
+    success_url = reverse_lazy("home")
+    template_name = 'delete_product.html'
+    
 def send_letter(request) -> None:
     send_mail('Тема', 'Тело письма', settings.EMAIL_HOST_USER, [settings.ADMIN_MAIL])
     return render(request, "home.html")
