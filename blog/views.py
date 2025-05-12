@@ -10,7 +10,7 @@ from blog.models import BlogRecord
 
 class BlogRecordCreateView(generic.CreateView):
     model = BlogRecord
-    fields = ['title', 'text', 'preview']
+    fields = ['title', 'text', 'preview', 'is_published']
     template_name = 'new_record.html'
     success_url = reverse_lazy('blog')
     extra_context = {
@@ -40,6 +40,7 @@ class BlogRecordListView(generic.ListView):
         # filter_param = self.request.GET.get('filter_param')
         # if filter_param:
         return queryset.filter(is_published=True).order_by("-created_at")
+        # return queryset.order_by("-created_at")
         # return self.model.objects.order_by("name")
 
 
