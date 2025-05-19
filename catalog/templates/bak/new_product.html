@@ -10,7 +10,8 @@
     <h2>Добавление товара</h2>
 </div>
 <div class="card col col-md-6 px-4 p-3 ms-4 mb-3">
-    <form method="post" action="add" class="form-floating" enctype="multipart/form-data">
+    <form method="post" class="form-floating" enctype="multipart/form-data">
+<!--    <form method="post" action="add" class="form-floating" enctype="multipart/form-data">-->
         {% csrf_token %}
         {{ form.as_p }}
         <script>/*
@@ -34,20 +35,23 @@
         <div class="mb-3 text-start">
             <div class="form-file">
                 <input type="file" accept="image/*" class="form-file-input" id="image_file" name="image_file">
-                <!--                <label class="form-file-label border border-secondary" for="image_file">-->
-                <!--                    <span class="form-file-text">Выберите изображение...</span>-->
-                <!--                    <span class="form-file-button">Найти</span>-->
-                <!--                </label>-->
             </div>
         </div>
         <div class="mb-3 text-start">
             <label for="product_desc" class="form-label">Описание</label>
             <textarea class="form-control" id="product_desc" name="product_desc" rows="5"></textarea>
         </div>
-        */</script>
+*/
+        </script>
         <div class="d-flex container-fluid justify-content-evenly">
-            <button type="submit" class="btn btn-primary col-5 p-3">Добавить</button>
-            <a href="#" class="btn btn-secondary col-5 p-3" onClick="javascript:history.go(-1);">Отменить</a>
+            <button type="submit" class="btn btn-primary col-5 p-3">
+            {% if product_editing_mode %}
+                Изменить
+            {% else %}
+                Добавить
+            {% endif %}
+            </button>
+            <!--a href="#" class="btn btn-secondary col-5 p-3" onClick="javascript:history.go(-1);">Отменить</a-->
         </div>
     </form>
 </div>

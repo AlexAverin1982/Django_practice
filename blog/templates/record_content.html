@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %} {{ record.title|truncatechars:100 }} {% endblock %}
+{% block content %}
+<div class="container-fluid d-flex border">
+    <div class="row">
+        <div class="col">
+            <h5>Запись за: {{ record.created_at }}</h5>
+            <p>
+            <h2>{{ record.title }}</h2>
+            {% if record.preview %}
+            <img src="{{ record.preview.url }}" alt="preview_img" style="height: 20rem;">
+            {% else %}
+            <img src="/media/static/no_image.jpg" alt="preview_img" style="height: 20rem;">
+            {% endif %}
+            <h4>{{ record.text }}</h4>
+
+            <h5>Число просмотров: {{ record.views_count }}</h5>
+        </div>
+    </div>
+</div>
+
+
+<a href="{% url 'blog' %}" class="btn btn-lg btn-outline-primary mx-2 px-5 m-3 float-bottom">Назад</a>
+<a href="{% url 'edit_BlogRecord' pk=record.id %}" class="btn btn-lg btn-outline-primary mx-2 px-5 m-3 float-bottom">Изменить</a>
+<a href="{% url 'delete_BlogRecord' pk=record.id%}" class="btn btn-lg btn-outline-primary mx-2 px-5 m-3 float-bottom">Удалить</a>
+
+{% endblock %}

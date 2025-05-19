@@ -1,16 +1,21 @@
 {% extends "base.html" %}
-{% block title %}Магазин {% endblock %}
+{% block title %}
+{% if title %}
+{{ title }}
+{% else %}Магазин
+{% endif %}
+{% endblock %}
 {% block content %}
 <div class="pricing-header px-2 pt-md-5 pb-md-4 mx-auto py-5 text-center">
     <h1 class="display-4">Sky-price</h1>
     <p class="lead">Sky-price - магазин компьютерных комплектующих по дешевым ценам!</p>
 </div>
 
-<div class="container-fluid pb-3">
+<div class="container-fluid pb-2">
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-5">
-        {% for item in page_obj %}
-        <div class="col gy-3">
+        {% for item in items %}
+        <div class="col gy-4 gx-1">
             <div class="card text-center" style="width: 25rem; height: 40rem;">
                 <div class="d-flex justify-content-center">
                     <a href="/details/{{ item.id }}">
@@ -38,7 +43,7 @@
         </div>
         {% endfor %}
     </div>
-
+    <script>/*
     <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
@@ -58,6 +63,22 @@
            style="text-decoration: none; font-size: 1.5em;">last &raquo;</a>
         {% endif %}
     </span>
-    </div>
+    </div>*/
+    </script>
 </div>
+{% endblock %}
+{% block navigation %}
+<nav class="list-pages">
+    <ul>
+        {% for p in paginator.page_range %}
+        {% if page_obj.number == p %}
+        <li class="page-num page-num-selected">{{ p }}</li>
+        {% else %}
+        <li class="page-num">
+            <a href="?page={{ p }}">{{ p }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+</nav>
 {% endblock %}

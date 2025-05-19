@@ -1,22 +1,129 @@
-import os.path
 from http.client import HTTPResponse
-from django.core.files.storage import FileSystemStorage
-from django.core.files.base import ContentFile
+# from django.core.files.storage import FileSystemStorage
+# from django.core.files.base import ContentFile
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-# from django.views import generic
-from django.core.paginator import Paginator
+from django.views import generic
+from django.urls import reverse
+# from django.core.paginator import Paginator
+from django.urls import reverse_lazy
+from .models import ContactsInfo, Product, Category, FeedbackMessage
+from django.conf import settings
+from django.core.mail import send_mail
 
-from config.settings import BASE_DIR
-from .models import ContactsInfo, Product, Category
-from typing import Any
+class ProductDetailView(generic.DetailView):
+    model = Product
+    template_name = "product_details.html"
+    context_object_name = 'product'
 
 
-# class ProductDetailView(generic.DetailView):
-#     model = Product
-#     template_name = "product_details.html"
+class ProductListView(generic.ListView):
+    model = Product
+    template_name = "home.html"
+    context_object_name = 'items'
+    paginate_by = 5
+
+    def get_queryset(self):
+        # q = self.request.GET.get('filter', '')
+        # if not q:
+        #     return self.model.objects.all()
+        return self.model.objects.order_by("-created_at")
+
+        # return self.model.objects.order_by("name")
 
 
+class ProductCreateView(generic.CreateView):
+    model = Product
+    fields = ['name', 'price', 'category', 'image', 'description']
+    template_name = 'new_product.html'
+    success_url = reverse_lazy('home')
+    extra_context = {
+        'categories': Category.objects.all().order_by('name'),
+        'title': 'Добавление товара',
+    }
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+
+class ProductUpdateView(generic.UpdateView):
+    model = Product
+    fields = ['name', 'price', 'category', 'image', 'description']
+    template_name = 'new_product.html'
+    success_url = reverse_lazy('home')
+    extra_context = {
+        'categories': Category.objects.all().order_by('name'),
+        'title': 'Редактирование товара',
+        'product_editing_mode': True,
+    }
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+
+class CategoryCreateView(generic.CreateView):
+    model = Category
+    fields = ['name', 'description']
+    template_name = 'new_category.html'
+    success_url = reverse_lazy('home')
+    extra_context = {
+        'title': 'Добавление категории',
+    }
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+
+class ContactsView(generic.TemplateView):
+    model = ContactsInfo
+    template_name = "contacts.html"
+    context_object_name = 'contacts'
+    # if ContactsInfo.objects:
+    #     extra_context = {
+    #         'contacts': ContactsInfo.objects.order_by("-updated_at")[0],
+    #         'title': 'Наши контакты',
+    #     }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'contacts': ContactsInfo.objects.order_by("-updated_at")[0],
+            'title': 'Наши контакты',
+        })
+        return context
+
+class PostedMessageView(generic.DetailView):
+    model = FeedbackMessage
+    template_name = "response.html"
+    context_object_name = 'message'
+
+
+class FeedbackFormView(generic.CreateView):
+    model = FeedbackMessage
+    fields = ['name', 'email', 'message']
+    template_name = 'feedback.html'
+
+    # success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        new_message = form.save()
+        return HttpResponseRedirect(reverse('posted_info', args=(new_message.pk,)))
+        # return super().form_valid(form)
+
+
+class ProductDeleteView(generic.DeleteView):
+    model = Product
+    success_url = reverse_lazy("home")
+    template_name = 'delete_product.html'
+    
+def send_letter(request) -> None:
+    send_mail('Тема', 'Тело письма', settings.EMAIL_HOST_USER, [settings.ADMIN_MAIL])
+    return render(request, "home.html")
+
+"""
 def home(request) -> HTTPResponse | Any:
     latest_products = Product.objects.all().order_by("-created_at")       # [:5]
 
@@ -25,9 +132,6 @@ def home(request) -> HTTPResponse | Any:
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     return render(request, "home.html", {"page_obj": page_obj})
-
-    # return render(request, "home.html", context={"items": latest_products})
-
 
 def contacts(request) -> HTTPResponse | Any:
     if request.method == "POST":
@@ -145,11 +249,11 @@ def add_product(request) -> HTTPResponse | Any:
     else:
         return render(request, "new_product.html")
 
-
-def details(request, product_id):
-    product = Product.objects.get(id=product_id)
-    return render(request, "product_details.html", context={"product": product})
-
+#
+# def details(request, product_id):
+#     product = Product.objects.get(id=product_id)
+#     return render(request, "product_details.html", context={"product": product})
+#
 
 def posted_info(request) -> HTTPResponse | Any:
     if request.method == "POST":
@@ -163,3 +267,4 @@ def posted_info(request) -> HTTPResponse | Any:
         )
     else:
         return render(request, "contacts.html")
+"""

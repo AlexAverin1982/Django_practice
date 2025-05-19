@@ -44,14 +44,10 @@ class Product(models.Model):
     price = models.FloatField(
         verbose_name="Цена за покупку", db_column="price", default=0.0
     )
-    created_at = models.DateTimeField(
-        verbose_name="Дата создания", db_column="created_at", db_default=Now()
-    )
-    updated_at = models.DateTimeField(
-        verbose_name="Дата последнего изменения",
-        db_column="updated_at",
-        db_default=Now(),
-    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
+
 
     def __str__(self) -> str:
         return f"{self.name}"
@@ -90,3 +86,25 @@ class ContactsInfo(models.Model):
         verbose_name_plural = "Контакты"
         ordering = ["updated_at", "email", "telegram"]
         db_table = "contacts"
+
+class FeedbackMessage(models.Model):
+
+    name = models.CharField(
+        max_length=150, verbose_name="Ваше имя"
+    )
+    email = models.EmailField(db_column="email", verbose_name="Электронная почта")
+
+    message = models.TextField(
+        max_length=5000, blank=False, verbose_name="Сообщение"
+    )
+
+    created_at = models.DateTimeField(verbose_name='Дата создания', db_default=Now())
+
+    def __str__(self) -> str:
+        return f"Сообщение пользователя {self.name}, отправленное {self.created_at}"
+
+    class Meta:
+        verbose_name = "Сообщение пользователя"
+        verbose_name_plural = "Сообщения пользователей"
+        ordering = ["name", "created_at", "email"]
+        db_table = "feedback"

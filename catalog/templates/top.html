@@ -1,6 +1,8 @@
 <div class="container-fluid d-flex align-items-center py-1 bg-white border-bottom box-shadow">
-    <h5 class="my-0 mr-md-auto font-weight-normal ps-2 me-1 text-nowrap">Sky-price</h5>
-    <nav class="container-fluid ms-2 me-1 px-2">
+    <a href="{% url 'home' %}">
+        <h5 class="my-0 mr-md-auto font-weight-normal ps-2 me-1 text-nowrap">Sky-price</h5>
+    </a>
+    <nav class="container-fluid ms-2 me-1 px-3">
         <div class="row">
             <div class="col-10">
                 <a class="p-2 btn btn-outline-primary" href="/">Каталог</a>
@@ -13,11 +15,13 @@
                         Добавить
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <li><a class="dropdown-item" href="/new_category/">категорию</a></li>
+                        <li><a class="dropdown-item" href="{% url 'new_category' %}">категорию</a></li>
                         <li><a class="dropdown-item" href="/new_product/">товар</a></li>
+                        <li><a class="dropdown-item" href="/blog/add_record/">запись в блоге</a></li>
                     </ul>
                 </div>
                 <a class="ms-3 btn btn-outline-primary" href="/admin/">Админка</a>
+                <a class="ms-3 btn btn-outline-primary" href="{% url 'send_letter' %}">Письмо</a>
             </div>
         </div>
     </nav>

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Блог{% endblock %}
+{% block content %}
+<div class="px-2 pt-md-5 pb-md-4 mx-auto py-5 text-center">
+    <h1 class="display-4">БЛОГ</h1>
+</div>
+
+{% if records %}
+<ul>
+    {% for record in records %}
+    {% if record.is_published or show_all %}
+    <li><a href="blog_record/{{ record.id }}">
+        <div class="d-flex vertical-align">
+            <div class="media">
+                <div class="mr-3">
+                    {% if record.preview %}
+                    <img src="{{ record.preview.url|default_if_none:'static/no_image.jpg' }}"
+                         style="height:10rem; vertical-align: middle;" alt="preview_img">
+                    {% else %}
+                    <img src="/media/static/no_image.jpg"
+                         style="height:10rem; vertical-align: middle;" alt="preview_img">
+                    {% endif %}
+                </div>
+                <div class="media-body">
+                    <h5> {{ record.title|truncatechars:150 }} </h5>
+                    Дата создания: {{ record.created_at }}
+                    <br>
+                    Число просмотров: {{ record.views_count }}
+                </div>
+            </div>
+        </div>
+    </a></li>
+    {% endif %}
+    {% endfor %}
+</ul>
+{% else %}
+<h5>Пока записей нет...</h5>
+
+
+{% endif %}
+<a href="{% url 'add_blog_record' %}" class="btn btn-lg btn-outline-primary mx-2 px-5 m-3 float-bottom">Добавить
+    запись</a>
+<button type="button" class="btn btn-lg btn-outline-primary mx-2 px-5 m-3 float-bottom"
+        onClick="javascript:history.go(-1);">Назад
+</button>
+
+{% endblock %}
+
+{% block navigation %}
+{% if records %}
+<nav class="list-pages">
+    <ul>
+        {% for p in paginator.page_range %}
+        {% if page_obj.number == p %}
+        <li class="page-num page-num-selected">{{ p }}</li>
+        {% else %}
+        <li class="page-num">
+            <a href="?page={{ p }}">{{ p }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}
