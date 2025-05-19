@@ -81,11 +81,19 @@ class ContactsView(generic.TemplateView):
     model = ContactsInfo
     template_name = "contacts.html"
     context_object_name = 'contacts'
-    extra_context = {
-        'contacts': ContactsInfo.objects.order_by("-updated_at")[0],
-        'title': 'Наши контакты',
-    }
+    # if ContactsInfo.objects:
+    #     extra_context = {
+    #         'contacts': ContactsInfo.objects.order_by("-updated_at")[0],
+    #         'title': 'Наши контакты',
+    #     }
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'contacts': ContactsInfo.objects.order_by("-updated_at")[0],
+            'title': 'Наши контакты',
+        })
+        return context
 
 class PostedMessageView(generic.DetailView):
     model = FeedbackMessage

@@ -44,14 +44,10 @@ class Product(models.Model):
     price = models.FloatField(
         verbose_name="Цена за покупку", db_column="price", default=0.0
     )
-    created_at = models.DateTimeField(
-        verbose_name="Дата создания", db_column="created_at", db_default=Now()
-    )
-    updated_at = models.DateTimeField(
-        verbose_name="Дата последнего изменения",
-        db_column="updated_at",
-        db_default=Now(),
-    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
+
 
     def __str__(self) -> str:
         return f"{self.name}"

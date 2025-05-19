@@ -17,9 +17,9 @@ class BlogRecordCreateView(generic.CreateView):
         'title': 'Новая запись в блоге',
     }
 
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
+    # def form_valid(self, form):
+    #     form.save()
+    #     return super().form_valid(form)
 
 
 class BlogRecordListView(generic.ListView):

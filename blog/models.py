@@ -17,9 +17,7 @@ class BlogRecord(models.Model):
         verbose_name="Изображение", blank=True, upload_to=images_dir
     )
 
-    created_at = models.DateTimeField(
-        verbose_name="Дата создания", db_default=Now(),
-    )
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
 
     is_published = models.BooleanField(
         verbose_name="Признак публикации", db_default=False

@@ -33,7 +33,7 @@
 <button type="button" class="btn btn-lg btn-outline-primary mx-2 px-5 m-3 float-bottom"
         onClick="javascript:history.go(-1);">Назад
 </button>
-<a href="{% url 'edit' pk=product.id %}" class="btn btn-lg btn-outline-primary mx-2 px-5 m-3 float-bottom">Изменить</a>
+<a href="{% url 'edit_product' pk=product.id %}" class="btn btn-lg btn-outline-primary mx-2 px-5 m-3 float-bottom">Изменить</a>
 <a href="{% url 'delete_product' pk=product.id %}" class="btn btn-lg btn-outline-primary mx-2 px-5 m-3 float-bottom">Удалить</a>
 
 {% endblock %}

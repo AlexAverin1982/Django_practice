@@ -1,5 +1,10 @@
 {% extends "base.html" %}
-{% block title %}Магазин {% endblock %}
+{% block title %}
+{% if title %}
+{{ title }}
+{% else %}Магазин
+{% endif %}
+{% endblock %}
 {% block content %}
 <div class="pricing-header px-2 pt-md-5 pb-md-4 mx-auto py-5 text-center">
     <h1 class="display-4">Sky-price</h1>
