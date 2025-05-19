@@ -1,25 +1,29 @@
 from django import forms
-from .models import Product
+from .models import BlogRecord
 from django.core.exceptions import ValidationError
 from django.conf import settings
 from .mixins import FormControlMixin
 
 
-class ProductCreateForm(FormControlMixin, forms.ModelForm):
+class BlogRecordCreateForm(FormControlMixin, forms.ModelForm):
 
     class Meta:
-        model = Product
-        fields = ['name', 'category', 'price', 'image', 'description']
+        model = BlogRecord
+        fields = ['title', 'text', 'preview', 'is_published', 'views_count']
 
     def __init__(self, *args, **kwargs):
-        super(ProductCreateForm, self).__init__(*args, **kwargs)
+        super(BlogRecordCreateForm, self).__init__(*args, **kwargs)
 
-        self.fields['name'].widget.attrs.update({
-            'placeholder': 'Введите краткое наименование'  # Текст подсказки внутри поля
+        self.fields['title'].widget.attrs.update({
+            'placeholder': 'Введите заголовок'  # Текст подсказки внутри поля
         })
 
-        self.fields['description'].widget.attrs.update({
-            'placeholder': 'Введите описание'  # Текст подсказки внутри поля
+        self.fields['text'].widget.attrs.update({
+            'placeholder': 'Введите текст записи'  # Текст подсказки внутри поля
+        })
+
+        self.fields['is_published'].widget.attrs.update({
+            'class': 'custom-checkbox-class'
         })
 
         # self.fields['price'].widget.attrs.update({
@@ -83,7 +87,7 @@ class ProductCreateForm(FormControlMixin, forms.ModelForm):
 
 
 """
-class ProductCreateForm(forms.Form):
+class BlogRecordCreateForm(forms.Form):
     name = forms.CharField(max_length=150, label="Наименование")
     description = forms.CharField(widget=forms.Textarea, initial="Описание товара", required=False)
     
@@ -103,7 +107,7 @@ class ProductCreateForm(forms.Form):
         Category,
         on_delete=models.CASCADE,
         db_column="category",
-        related_name="products",
+        related_name="BlogRecords",
     )
     price = models.FloatField(
         verbose_name="Цена за покупку", db_column="price", default=0.0

@@ -94,9 +94,16 @@ EMAIL_USE_SSL = False
 
 ADMIN_MAIL = os.getenv('ADMIN_MAIL')
 
-
-
-
+FORBIDDEN_WORDS = ['казино',
+                   'криптовалюта',
+                   'крипта',
+                   'биржа',
+                   'дешево',
+                   'бесплатно',
+                   'обман',
+                   'полиция',
+                   'радар'
+                   ]
 
 DATABASES = {
     "default": {

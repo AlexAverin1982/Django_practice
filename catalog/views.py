@@ -10,12 +10,38 @@ from django.urls import reverse_lazy
 from .models import ContactsInfo, Product, Category, FeedbackMessage
 from django.conf import settings
 from django.core.mail import send_mail
+from .forms import ProductCreateForm
 
 class ProductDetailView(generic.DetailView):
     model = Product
     template_name = "product_details.html"
     context_object_name = 'product'
 
+"""
+class AuthorCreateView(CreateView):
+    model = Author
+    form_class = AuthorForm
+    template_name = 'library/author_form.html'
+    success_url = reverse_lazy('authors_list')
+
+class AuthorUpdateView(UpdateView):
+    model = Author
+    form_class = AuthorForm
+    template_name = 'library/author_form.html'
+    success_url = reverse_lazy('authors_list')
+
+class BookCreateView(CreateView):
+    model = Book
+    form_class = BookForm
+    template_name = 'library/book_form.html'
+    success_url = reverse_lazy('books_list')
+
+class BookUpdateView(UpdateView):
+    model = Book
+    form_class = BookForm
+    template_name = 'library/book_form.html'
+    success_url = reverse_lazy('books_list')
+"""
 
 class ProductListView(generic.ListView):
     model = Product
@@ -34,23 +60,22 @@ class ProductListView(generic.ListView):
 
 class ProductCreateView(generic.CreateView):
     model = Product
-    fields = ['name', 'price', 'category', 'image', 'description']
-    template_name = 'new_product.html'
+    form_class = ProductCreateForm
+    # fields = ['name', 'price', 'category', 'image', 'description']
+    # template_name = 'new_product.html'
+    template_name = 'product_form.html'
     success_url = reverse_lazy('home')
     extra_context = {
         'categories': Category.objects.all().order_by('name'),
         'title': 'Добавление товара',
     }
 
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
-
-
 class ProductUpdateView(generic.UpdateView):
     model = Product
-    fields = ['name', 'price', 'category', 'image', 'description']
-    template_name = 'new_product.html'
+    form_class = ProductCreateForm
+    template_name = 'product_form.html'
+    # fields = ['name', 'price', 'category', 'image', 'description']
+    # template_name = 'new_product.html'
     success_url = reverse_lazy('home')
     extra_context = {
         'categories': Category.objects.all().order_by('name'),
@@ -58,9 +83,13 @@ class ProductUpdateView(generic.UpdateView):
         'product_editing_mode': True,
     }
 
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
+    def get_success_url(self):
+        # print(self.kwargs)
+        return reverse("product_details", kwargs=self.kwargs)
+
+    # def form_valid(self, form):
+    #     form.save()
+    #     return super().form_valid(form)
 
 
 class CategoryCreateView(generic.CreateView):

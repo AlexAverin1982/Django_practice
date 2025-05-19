@@ -3,6 +3,7 @@
 # from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views import generic
+from .forms import BlogRecordCreateForm
 # from django.db.models import F
 
 from blog.models import BlogRecord
@@ -10,7 +11,8 @@ from blog.models import BlogRecord
 
 class BlogRecordCreateView(generic.CreateView):
     model = BlogRecord
-    fields = ['title', 'text', 'preview', 'is_published']
+    form_class = BlogRecordCreateForm
+    # fields = ['title', 'text', 'preview', 'is_published']
     template_name = 'new_record.html'
     success_url = reverse_lazy('blog')
     extra_context = {
@@ -62,7 +64,8 @@ class BlogRecordView(generic.DetailView):
 
 class BlogRecordUpdateView(generic.UpdateView):
     model = BlogRecord
-    fields = ['title', 'preview', 'text', 'is_published']
+    form_class = BlogRecordCreateForm
+    # fields = ['title', 'preview', 'text', 'is_published']
     template_name = 'new_record.html'
     extra_context = {
         'page_title': 'Редактирование записи',
@@ -75,7 +78,7 @@ class BlogRecordUpdateView(generic.UpdateView):
 
     def get_success_url(self):
         # print(self.kwargs)
-        return reverse("record_content", kwargs=self.kwargs)
+        return reverse("product_details", kwargs=self.kwargs)
 
 
 class BlogRecordDeleteView(generic.DeleteView):
