@@ -1,28 +1,17 @@
-# from django.contrib.admin.widgets import url_params_from_lookup_dict
-# from django.http import Http404
-# from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views import generic
 from .forms import BlogRecordCreateForm
-# from django.db.models import F
-
 from blog.models import BlogRecord
 
 
 class BlogRecordCreateView(generic.CreateView):
     model = BlogRecord
     form_class = BlogRecordCreateForm
-    # fields = ['title', 'text', 'preview', 'is_published']
     template_name = 'new_record.html'
     success_url = reverse_lazy('blog')
     extra_context = {
         'title': 'Новая запись в блоге',
     }
-
-    # def form_valid(self, form):
-    #     form.save()
-    #     return super().form_valid(form)
-
 
 class BlogRecordListView(generic.ListView):
     model = BlogRecord
@@ -34,17 +23,8 @@ class BlogRecordListView(generic.ListView):
     }
 
     def get_queryset(self):
-        # q = self.request.GET.get('filter', '')
-        # if not q:
-        #     return self.model.objects.all()
-        # return self.model.objects.filter("is_published").order_by("-created_at")
         queryset = super().get_queryset()
-        # filter_param = self.request.GET.get('filter_param')
-        # if filter_param:
         return queryset.filter(is_published=True).order_by("-created_at")
-        # return queryset.order_by("-created_at")
-        # return self.model.objects.order_by("name")
-
 
 class BlogRecordView(generic.DetailView):
     model = BlogRecord
@@ -54,10 +34,6 @@ class BlogRecordView(generic.DetailView):
     def get_object(self, queryset=None):
         # Переопределение метода get_object для настройки логики выбора объекта
         obj = super().get_object(queryset)
-        # Дополнительная логика (например,  изменения значений полей)
-        # if not obj.is_active:
-        #     raise Http404("Object not found")
-        print(queryset)
         obj.increment_views_count()
         return obj
 
@@ -65,7 +41,6 @@ class BlogRecordView(generic.DetailView):
 class BlogRecordUpdateView(generic.UpdateView):
     model = BlogRecord
     form_class = BlogRecordCreateForm
-    # fields = ['title', 'preview', 'text', 'is_published']
     template_name = 'new_record.html'
     extra_context = {
         'page_title': 'Редактирование записи',
@@ -77,7 +52,6 @@ class BlogRecordUpdateView(generic.UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        # print(self.kwargs)
         return reverse("product_details", kwargs=self.kwargs)
 
 

@@ -1,5 +1,3 @@
-# mixins.py
-from django import forms
 
 class FormControlMixin:
     def __init__(self, *args, **kwargs):
@@ -11,5 +9,3 @@ class FormControlMixin:
                 'class': 'form-control',
             })
 
-        # for field in self.fields.values():
-        #     field.widget.attrs.update({'class': 'form-control'})

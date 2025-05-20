@@ -14,35 +14,6 @@
 <!--    <form method="post" action="add" class="form-floating" enctype="multipart/form-data">-->
         {% csrf_token %}
         {{ form.as_p }}
-        <script>/*
-        <div class="mb-3 text-start">
-            <label for="product_name" class="form-label">Наименование товара</label>
-            <input class="form-control" id="product_name" name="product_name">
-        </div>
-        <div class="mb-3 text-start">
-            <label for="product_price" class="form-label">Цена в рублях</label>
-            <input class="form-control" type="number" value="0.0" data-decimals="2" min="0" step=".01"
-                   id="product_price" name="product_price"/>
-        </div>
-        <div class="mb-3 text-start">
-            <select class="form-select" aria-label="Категория" name="category_name">
-                <option selected>Выберите категорию</option>
-                {% for category in categories %}
-                <option value="{{ category }}">{{ category }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="mb-3 text-start">
-            <div class="form-file">
-                <input type="file" accept="image/*" class="form-file-input" id="image_file" name="image_file">
-            </div>
-        </div>
-        <div class="mb-3 text-start">
-            <label for="product_desc" class="form-label">Описание</label>
-            <textarea class="form-control" id="product_desc" name="product_desc" rows="5"></textarea>
-        </div>
-*/
-        </script>
         <div class="d-flex container-fluid justify-content-evenly">
             <button type="submit" class="btn btn-primary col-5 p-3">
             {% if product_editing_mode %}
