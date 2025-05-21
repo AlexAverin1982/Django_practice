@@ -19,8 +19,13 @@
             <div class="card text-center" style="width: 25rem; height: 40rem;">
                 <div class="d-flex justify-content-center">
                     <a href="/details/{{ item.id }}">
-                        <img src={{ item.image.url }} class="card-img-top" alt="img"
-                             style="width: 20rem; height: 20rem;">
+                        {% if item.image %}
+                        <img src="{{ item.image.url }}"
+                             style="width: 20rem; height:20rem; vertical-align: middle;" alt="img">
+                        {% else %}
+                        <img src="/media/static/no_image.jpg"
+                             style="height:20rem; vertical-align: middle;" alt="img">
+                        {% endif %}
                     </a>
                 </div>
                 <div class="h-75">
@@ -43,28 +48,6 @@
         </div>
         {% endfor %}
     </div>
-    <script>/*
-    <div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page=1" style="text-decoration: none; font-size: 1.5em;">&laquo; first</a>
-            <a href="?page={{ page_obj.previous_page_number }}" style="text-decoration: none; font-size: 1.5em;">
-                previous
-            </a>
-        {% endif %}
-
-        <span class="current" style="text-decoration: none; font-size: 1.5em;">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span>
-
-        {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }} " style="text-decoration: none; font-size: 1.5em;">next</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}"
-           style="text-decoration: none; font-size: 1.5em;">last &raquo;</a>
-        {% endif %}
-    </span>
-    </div>*/
-    </script>
 </div>
 {% endblock %}
 {% block navigation %}

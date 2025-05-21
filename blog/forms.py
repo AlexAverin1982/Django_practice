@@ -1,5 +1,5 @@
 from django import forms
-from .models import Product
+from .models import BlogRecord
 from django.core.exceptions import ValidationError
 from .mixins import FormControlMixin
 
@@ -14,21 +14,25 @@ FORBIDDEN_WORDS = ['казино',
                    'радар'
                    ]
 
-class ProductCreateForm(FormControlMixin, forms.ModelForm):
 
+class BlogRecordCreateForm(FormControlMixin, forms.ModelForm):
     class Meta:
-        model = Product
-        fields = ['name', 'category', 'price', 'image', 'description']
+        model = BlogRecord
+        fields = ['title', 'text', 'preview', 'is_published', 'views_count']
 
     def __init__(self, *args, **kwargs):
-        super(ProductCreateForm, self).__init__(*args, **kwargs)
+        super(BlogRecordCreateForm, self).__init__(*args, **kwargs)
 
-        self.fields['name'].widget.attrs.update({
-            'placeholder': 'Введите краткое наименование'  # Текст подсказки внутри поля
+        self.fields['title'].widget.attrs.update({
+            'placeholder': 'Введите заголовок'  # Текст подсказки внутри поля
         })
 
-        self.fields['description'].widget.attrs.update({
-            'placeholder': 'Введите описание'  # Текст подсказки внутри поля
+        self.fields['text'].widget.attrs.update({
+            'placeholder': 'Введите текст записи'  # Текст подсказки внутри поля
+        })
+
+        self.fields['is_published'].widget.attrs.update({
+            'class': 'custom-checkbox-class'
         })
 
     def clean_name(self):
@@ -40,7 +44,6 @@ class ProductCreateForm(FormControlMixin, forms.ModelForm):
                 raise ValidationError(f'Наименование не может содержать слово "{word}"')
 
         return name
-
 
     def clean_description(self):
         description = self.cleaned_data.get('description')

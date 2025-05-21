@@ -95,9 +95,6 @@ EMAIL_USE_SSL = False
 ADMIN_MAIL = os.getenv('ADMIN_MAIL')
 
 
-
-
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",

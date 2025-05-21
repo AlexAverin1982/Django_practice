@@ -1,7 +1,6 @@
 from django.db import models
 from django.db.models.functions import Now
 
-
 class Category(models.Model):
     name = models.CharField(
         max_length=150, verbose_name="Наименование", db_column="name"
@@ -32,14 +31,13 @@ class Product(models.Model):
     image = models.ImageField(
         verbose_name="Изображение", db_column="image", blank=True, upload_to="static/images/"
     )
-    # image = models.CharField(
-    #     verbose_name="Изображение", db_column="image", blank=True
-    # )
+
     category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,
         db_column="category",
         related_name="products",
+        verbose_name = "Категория",
     )
     price = models.FloatField(
         verbose_name="Цена за покупку", db_column="price", default=0.0
