@@ -10,7 +10,7 @@ from .forms import ProductCreateForm
 
 class ProductDetailView(generic.DetailView):
     model = Product
-    template_name = "product_details.html"
+    template_name = "user_profile.html"
     context_object_name = 'product'
 
 class ProductListView(generic.ListView):
@@ -94,7 +94,7 @@ class FeedbackFormView(generic.CreateView):
 class ProductDeleteView(generic.DeleteView):
     model = Product
     success_url = reverse_lazy("home")
-    template_name = 'delete_product.html'
+    template_name = 'delete_user.html'
     
 def send_letter(request) -> None:
     send_mail('Тема', 'Тело письма', settings.EMAIL_HOST_USER, [settings.ADMIN_MAIL])
