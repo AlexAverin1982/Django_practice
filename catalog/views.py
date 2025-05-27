@@ -7,6 +7,7 @@ from .models import ContactsInfo, Product, Category, FeedbackMessage
 from django.conf import settings
 from django.core.mail import send_mail
 from .forms import ProductCreateForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 class ProductDetailView(generic.DetailView):
     model = Product
@@ -22,7 +23,7 @@ class ProductListView(generic.ListView):
     def get_queryset(self):
         return self.model.objects.order_by("-created_at")
 
-class ProductCreateView(generic.CreateView):
+class ProductCreateView(LoginRequiredMixin, generic.CreateView):
     model = Product
     form_class = ProductCreateForm
     template_name = 'product_form.html'
@@ -32,7 +33,7 @@ class ProductCreateView(generic.CreateView):
         'title': 'Добавление товара',
     }
 
-class ProductUpdateView(generic.UpdateView):
+class ProductUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Product
     form_class = ProductCreateForm
     template_name = 'product_form.html'
@@ -47,7 +48,7 @@ class ProductUpdateView(generic.UpdateView):
         return reverse("product_details", kwargs=self.kwargs)
 
 
-class CategoryCreateView(generic.CreateView):
+class CategoryCreateView(LoginRequiredMixin, generic.CreateView):
     model = Category
     fields = ['name', 'description']
     template_name = 'new_category.html'
@@ -91,7 +92,7 @@ class FeedbackFormView(generic.CreateView):
         return HttpResponseRedirect(reverse('posted_info', args=(new_message.pk,)))
 
 
-class ProductDeleteView(generic.DeleteView):
+class ProductDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Product
     success_url = reverse_lazy("home")
     template_name = 'delete_product.html'
