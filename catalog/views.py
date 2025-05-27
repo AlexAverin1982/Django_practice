@@ -23,7 +23,8 @@ class ProductListView(generic.ListView):
     def get_queryset(self):
         return self.model.objects.order_by("-created_at")
 
-class ProductCreateView(LoginRequiredMixin, generic.CreateView):
+class ProductCreateView(
+    generic.CreateView):
     model = Product
     form_class = ProductCreateForm
     template_name = 'product_form.html'
