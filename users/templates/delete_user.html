@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col">
             <form action="" method="post">{% csrf_token %}
-                <p>Вы уверены, что хотите удалить профиль "{{ user.name }}"?</p>
+                <p>Вы уверены, что хотите удалить профиль "{{ user.username }}"?</p>
                 <input type="submit" value="Да, удалить"/>
             </form>
         </div>

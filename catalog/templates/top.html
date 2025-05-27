@@ -1,3 +1,4 @@
+{% load static %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="{% url 'home' %}">Sky-price</a>
@@ -22,8 +23,13 @@
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
                        data-bs-auto-close="outside">
                         {{ user.username }}
-                        <img src="https://github.com/mdo.png" alt="hugenerd" width="40" height="40"
+                        {% if user.avatar %}
+                        <img src="{{ user.avatar.url }}" alt="avatar" width="40" height="40"
                              class="rounded-circle ms-3">
+                        {% else %}
+                        <img src="/media/static/no_avatar.png" alt="avatar" width="40" height="40"
+                             class="rounded-circle ms-3">
+                        {% endif %}
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{% url 'user_profile' pk=user.id%}">Профиль</a></li>
