@@ -18,7 +18,7 @@ class ProductCreateForm(FormControlMixin, forms.ModelForm):
 
     class Meta:
         model = Product
-        fields = ['name', 'category', 'price', 'image', 'description']
+        fields = ['name', 'category', 'price', 'image', 'description', 'is_published']
 
     def __init__(self, *args, **kwargs):
         super(ProductCreateForm, self).__init__(*args, **kwargs)
@@ -29,6 +29,10 @@ class ProductCreateForm(FormControlMixin, forms.ModelForm):
 
         self.fields['description'].widget.attrs.update({
             'placeholder': 'Введите описание'  # Текст подсказки внутри поля
+        })
+
+        self.fields['is_published'].widget.attrs.update({
+            'class': 'custom-checkbox-class'
         })
 
     def clean_name(self):

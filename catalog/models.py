@@ -1,5 +1,11 @@
 from django.db import models
 from django.db.models.functions import Now
+from django_currentuser.middleware import (
+    get_current_user, get_current_authenticated_user)
+from django_currentuser.db.models import CurrentUserField
+
+from users.models import CustomUser
+
 
 class Category(models.Model):
     name = models.CharField(
@@ -20,7 +26,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    images_dir='/static/images/'
+    images_dir = '/static/images/'
 
     name = models.CharField(
         max_length=150, db_column="name", verbose_name="Наименование"
@@ -37,7 +43,7 @@ class Product(models.Model):
         on_delete=models.CASCADE,
         db_column="category",
         related_name="products",
-        verbose_name = "Категория",
+        verbose_name="Категория",
     )
     price = models.FloatField(
         verbose_name="Цена за покупку", db_column="price", default=0.0
@@ -46,6 +52,13 @@ class Product(models.Model):
 
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
 
+    is_published = models.BooleanField(
+        verbose_name="Признак публикации", db_default=False
+    )
+    owner = CurrentUserField(on_delete=models.SET_NULL, related_name='products',
+                              verbose_name='Владелец')
+    # owner = models.ForeignKey(CustomUser, null=True, on_delete=models.SET_NULL, related_name='products',
+    #                           verbose_name='Владелец')
 
     def __str__(self) -> str:
         return f"{self.name}"
@@ -55,6 +68,7 @@ class Product(models.Model):
         verbose_name_plural = "товары"
         ordering = ["name"]
         db_table = "product"
+        permissions = [('can_unpublish_product', 'Can publish and unpublish product'), ]
 
 
 class ContactsInfo(models.Model):
@@ -85,8 +99,8 @@ class ContactsInfo(models.Model):
         ordering = ["updated_at", "email", "telegram"]
         db_table = "contacts"
 
-class FeedbackMessage(models.Model):
 
+class FeedbackMessage(models.Model):
     name = models.CharField(
         max_length=150, verbose_name="Ваше имя"
     )

@@ -33,6 +33,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="{% url 'user_profile' pk=user.id%}">Профиль</a></li>
+                        <li><a class="dropdown-item" href="{% url 'new_product' %}">Добавить товар</a></li>
                         <li>
                             <a class="dropdown-item" href="#">
                                 <form method="post" action="{% url 'logout' %}" style="display: inline;">
