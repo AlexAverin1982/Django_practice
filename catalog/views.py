@@ -8,11 +8,16 @@ from django.conf import settings
 from django.core.mail import send_mail
 from .forms import ProductCreateForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from typing_extensions import Any
+from django.http import HttpResponseForbidden
+from django.shortcuts import get_object_or_404, redirect
+
 
 class ProductDetailView(generic.DetailView):
     model = Product
     template_name = "product_details.html"
     context_object_name = 'product'
+
 
 class ProductListView(generic.ListView):
     model = Product
@@ -22,6 +27,8 @@ class ProductListView(generic.ListView):
 
     def get_queryset(self):
         return self.model.objects.order_by("-created_at")
+
+
 
 class ProductCreateView(LoginRequiredMixin, generic.CreateView):
     model = Product
@@ -43,6 +50,17 @@ class ProductUpdateView(LoginRequiredMixin, generic.UpdateView):
         'title': 'Редактирование товара',
         'product_editing_mode': True,
     }
+
+    def post(self, request, *args, **kwargs) -> Any:
+        # уточнить, изменяется ли статус публикации
+        form = self.get_form()
+        print(form)
+        if 'is_published' in form.changed_data:
+            if not request.user.has_perm('catalog.can_unpublish_product'):
+                return HttpResponseForbidden("У вас нет прав для изменения статуса публикаци товара")
+
+        # super(generic.UpdateView).post(request, *args, **kwargs)
+        return super(ProductUpdateView, self).post(request, *args, **kwargs)
 
     def get_success_url(self):
         return reverse("product_details", kwargs=self.kwargs)
@@ -96,7 +114,19 @@ class ProductDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Product
     success_url = reverse_lazy("home")
     template_name = 'delete_product.html'
-    
+
+    def post(self, request, *args, **kwargs) -> Any:
+        obj = Product.objects.get(id=kwargs['pk'])
+        if (not request.user.has_perm('catalog.delete_product')) and (obj.owner != request.user):
+            return HttpResponseForbidden("У вас нет прав для удаления товара")
+
+        super(ProductDeleteView, self).post(request, *args, **kwargs)
+
+        return redirect('home')
+
+
+    template_name = 'delete_product.html'
+
 def send_letter(request) -> None:
     send_mail('Тема', 'Тело письма', settings.EMAIL_HOST_USER, [settings.ADMIN_MAIL])
     return render(request, "home.html")
