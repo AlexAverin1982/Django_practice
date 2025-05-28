@@ -1,18 +1,13 @@
 from django.db import models
 from django.db.models.functions import Now
-from django_currentuser.middleware import (
-    get_current_user, get_current_authenticated_user)
 from django_currentuser.db.models import CurrentUserField
-
-from users.models import CustomUser
-
 
 class Category(models.Model):
     name = models.CharField(
         max_length=150, verbose_name="Наименование", db_column="name"
     )
     description = models.TextField(
-        max_length=500, verbose_name="Описание", blank=True, db_column="description"
+        max_length=2000, verbose_name="Описание", blank=True, db_column="description"
     )
 
     def __str__(self) -> str:
@@ -32,7 +27,7 @@ class Product(models.Model):
         max_length=150, db_column="name", verbose_name="Наименование"
     )
     description = models.TextField(
-        max_length=500, blank=True, db_column="description", verbose_name="Описание"
+        max_length=2000, blank=True, db_column="description", verbose_name="Описание"
     )
     image = models.ImageField(
         verbose_name="Изображение", db_column="image", blank=True, upload_to="static/images/"

@@ -14,8 +14,8 @@ FORBIDDEN_WORDS = ['казино',
                    'радар'
                    ]
 
-class ProductCreateForm(FormControlMixin, forms.ModelForm):
 
+class ProductCreateForm(FormControlMixin, forms.ModelForm):
     class Meta:
         model = Product
         fields = ['name', 'category', 'price', 'image', 'description', 'is_published']
@@ -44,7 +44,6 @@ class ProductCreateForm(FormControlMixin, forms.ModelForm):
                 raise ValidationError(f'Наименование не может содержать слово "{word}"')
 
         return name
-
 
     def clean_description(self):
         description = self.cleaned_data.get('description')

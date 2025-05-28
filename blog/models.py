@@ -53,3 +53,4 @@ class BlogRecord(models.Model):
         verbose_name_plural = "Записи в блоге"
         ordering = ["title"]
         db_table = "blog_records"
+        # permissions = [('can_unpublish_product', 'Can publish and unpublish product'), ]
