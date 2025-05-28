@@ -110,7 +110,7 @@ class FeedbackFormView(generic.CreateView):
         return HttpResponseRedirect(reverse('posted_info', args=(new_message.pk,)))
 
 
-class ProductDeleteView(LoginRequiredMixin, generic.DeleteView):
+class ProductDeleteView(generic.DeleteView):
     model = Product
     success_url = reverse_lazy("home")
     template_name = 'delete_product.html'

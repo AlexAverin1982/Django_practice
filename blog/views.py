@@ -2,9 +2,10 @@ from django.urls import reverse_lazy, reverse
 from django.views import generic
 from .forms import BlogRecordCreateForm
 from blog.models import BlogRecord
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class BlogRecordCreateView(generic.CreateView):
+class BlogRecordCreateView(LoginRequiredMixin, generic.CreateView):
     model = BlogRecord
     form_class = BlogRecordCreateForm
     template_name = 'new_record.html'
@@ -12,6 +13,10 @@ class BlogRecordCreateView(generic.CreateView):
     extra_context = {
         'title': 'Новая запись в блоге',
     }
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 class BlogRecordListView(generic.ListView):
     model = BlogRecord
@@ -38,7 +43,7 @@ class BlogRecordView(generic.DetailView):
         return obj
 
 
-class BlogRecordUpdateView(generic.UpdateView):
+class BlogRecordUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = BlogRecord
     form_class = BlogRecordCreateForm
     template_name = 'new_record.html'
@@ -48,14 +53,17 @@ class BlogRecordUpdateView(generic.UpdateView):
     }
 
     def form_valid(self, form):
+        form.instance.user = self.request.user
         form.save()
         return super().form_valid(form)
+
 
     def get_success_url(self):
         return reverse("product_details", kwargs=self.kwargs)
 
 
-class BlogRecordDeleteView(generic.DeleteView):
+class BlogRecordDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = BlogRecord
     success_url = reverse_lazy("blog")
     template_name = 'delete_record.html'
+
