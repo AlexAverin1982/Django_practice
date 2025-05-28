@@ -52,7 +52,7 @@
 {% endblock %}
 {% block navigation %}
 <nav class="list-pages">
-    <ul>
+    <ul class="list-inline">
         {% for p in paginator.page_range %}
         {% if page_obj.number == p %}
         <li class="page-num page-num-selected">{{ p }}</li>
@@ -61,6 +61,7 @@
             <a href="?page={{ p }}">{{ p }}</a>
         </li>
         {% endif %}
+
         {% endfor %}
     </ul>
 </nav>
