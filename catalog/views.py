@@ -14,6 +14,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from typing_extensions import Any
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
+
 
 def is_moder(user) -> bool:
     if isinstance(user, AnonymousUser):
@@ -21,12 +24,15 @@ def is_moder(user) -> bool:
     else:
         return user.groups.filter(name='Модераторы продуктов').exists()
 
+
 def is_superuser(user) -> bool:
     if isinstance(user, AnonymousUser) or isinstance(user, CustomUser):
         return False
     else:
         return user.filter(is_superuser=True).exists()
 
+
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class ProductDetailView(generic.DetailView):
     model = Product
     template_name = "product_details.html"
