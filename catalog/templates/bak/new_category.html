@@ -8,16 +8,6 @@
     <form method="post" class="form-floating">
         {% csrf_token %}
         {{ form.as_p }}
-        <script>/*
-        <div class="mb-3 text-start">
-            <label for="category_name" class="form-label">Наименование категории</label>
-            <input class="form-control" id="category_name" name="category_name">
-        </div>
-        <div class="mb-3 text-start">
-            <label for="category_desc" class="form-label">Описание</label>
-            <textarea class="form-control" id="category_desc" name="category_desc" rows="5"></textarea>
-        </div>
-        */</script>
         <div class="d-flex container-fluid justify-content-evenly">
             <button type="submit" class="btn btn-primary col-5 p-3">Добавить</button>
             <a href="#" class="btn btn-secondary col-5 p-3" onClick="javascript:history.go(-1);">Отменить</a>

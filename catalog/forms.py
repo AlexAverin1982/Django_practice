@@ -14,11 +14,11 @@ FORBIDDEN_WORDS = ['казино',
                    'радар'
                    ]
 
-class ProductCreateForm(FormControlMixin, forms.ModelForm):
 
+class ProductCreateForm(FormControlMixin, forms.ModelForm):
     class Meta:
         model = Product
-        fields = ['name', 'category', 'price', 'image', 'description']
+        fields = ['name', 'category', 'price', 'image', 'description', 'is_published']
 
     def __init__(self, *args, **kwargs):
         super(ProductCreateForm, self).__init__(*args, **kwargs)
@@ -31,6 +31,10 @@ class ProductCreateForm(FormControlMixin, forms.ModelForm):
             'placeholder': 'Введите описание'  # Текст подсказки внутри поля
         })
 
+        self.fields['is_published'].widget.attrs.update({
+            'class': 'custom-checkbox-class'
+        })
+
     def clean_name(self):
 
         name = self.cleaned_data.get('name')
@@ -40,7 +44,6 @@ class ProductCreateForm(FormControlMixin, forms.ModelForm):
                 raise ValidationError(f'Наименование не может содержать слово "{word}"')
 
         return name
-
 
     def clean_description(self):
         description = self.cleaned_data.get('description')

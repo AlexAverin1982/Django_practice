@@ -143,7 +143,6 @@ class FeedbackFormView(generic.CreateView):
     fields = ['name', 'email', 'message']
     template_name = 'feedback.html'
 
-
     def form_valid(self, form):
         new_message = form.save()
         return HttpResponseRedirect(reverse('posted_info', args=(new_message.pk,)))

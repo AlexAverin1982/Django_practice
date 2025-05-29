@@ -35,14 +35,18 @@
 </ul>
 {% else %}
 <h5>Пока записей нет...</h5>
-
-
 {% endif %}
+{% for group in request.user.groups.all %}
+{% if group.name == 'Контент-менеджеры' %}
 <a href="{% url 'add_blog_record' %}" class="btn btn-lg btn-outline-primary mx-2 px-5 m-3 float-bottom">Добавить
     запись</a>
+{% endif %}
+{% endfor %}
+
 <button type="button" class="btn btn-lg btn-outline-primary mx-2 px-5 m-3 float-bottom"
         onClick="javascript:history.go(-1);">Назад
 </button>
+
 
 {% endblock %}
 
