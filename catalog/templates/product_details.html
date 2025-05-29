@@ -38,11 +38,9 @@
     </div>
 </div>
 
+<a href="{% url 'home' %}" class="btn btn-lg btn-outline-primary mx-2 px-5 m-3 float-bottom">Назад</a>
 
-<button type="button" class="btn btn-lg btn-outline-primary mx-2 px-5 m-3 float-bottom"
-        onClick="javascript:history.go(-1);">Назад
-</button>
-{% if user.is_authenticated %}
+{% if user.username == product.owner.username %}
 <a href="{% url 'edit_product' pk=product.id %}" class="btn btn-lg btn-outline-primary mx-2 px-5 m-3 float-bottom">Изменить</a>
 <a href="{% url 'delete_product' pk=product.id %}" class="btn btn-lg btn-outline-primary mx-2 px-5 m-3 float-bottom">Удалить</a>
 {% endif %}

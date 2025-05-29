@@ -12,7 +12,8 @@ class CustomUserCreationForm(FormControlMixin, UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = CustomUser
         fields = (
-        'email', 'username', 'first_name', 'last_name', 'phone_number', 'avatar', 'country', 'password1', 'password2')
+            'email', 'username', 'first_name', 'last_name', 'phone_number', 'avatar', 'country', 'is_admin',
+            'password1', 'password2')
 
     def __init__(self, *args, **kwargs):
         super(CustomUserCreationForm, self).__init__(*args, **kwargs)
@@ -31,7 +32,7 @@ class CustomUserUpdateForm(FormControlMixin, UserChangeForm):
     class Meta(UserChangeForm.Meta):
         model = CustomUser
         fields = (
-        'email', 'username', 'first_name', 'last_name', 'phone_number', 'avatar', 'country')
+            'email', 'username', 'first_name', 'last_name', 'phone_number', 'avatar', 'country', 'is_admin')
 
     def __init__(self, *args, **kwargs):
         super(UserChangeForm, self).__init__(*args, **kwargs)
