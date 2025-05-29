@@ -23,7 +23,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
+CACHE_ENABLED = True
 
+if CACHE_ENABLED:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': 'redis://127.0.0.1:6379/1',
+        }
+    }
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -96,7 +104,6 @@ EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
 ADMIN_MAIL = os.getenv('ADMIN_MAIL')
-
 
 DATABASES = {
     "default": {

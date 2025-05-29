@@ -14,6 +14,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from typing_extensions import Any
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
+from django.core.cache import cache
+
+from .services import ProductService
+
 
 def is_moder(user) -> bool:
     if isinstance(user, AnonymousUser):
@@ -21,12 +27,15 @@ def is_moder(user) -> bool:
     else:
         return user.groups.filter(name='Модераторы продуктов').exists()
 
+
 def is_superuser(user) -> bool:
     if isinstance(user, AnonymousUser) or isinstance(user, CustomUser):
         return False
     else:
         return user.filter(is_superuser=True).exists()
 
+
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class ProductDetailView(generic.DetailView):
     model = Product
     template_name = "product_details.html"
@@ -39,13 +48,20 @@ class ProductListView(generic.ListView):
     context_object_name = 'items'
     paginate_by = 5
 
+    extra_context = {
+        'categories': Category.objects.all().order_by('name'),
+    }
     def get_queryset(self):
-        user = self.request.user
-        if is_moder(user) or is_superuser(user):
-            products = self.model.objects.all()
-        else:
-            products = self.model.objects.filter(is_published=True)
-        return products.order_by("-created_at")
+        queryset = cache.get('products_queryset')
+        if not queryset:
+            user = self.request.user
+            if is_moder(user) or is_superuser(user):
+                products = self.model.objects.all()
+            else:
+                products = self.model.objects.filter(is_published=True)
+            queryset = products.order_by("-created_at")
+            cache.set('products_queryset', queryset, 60 * 15)
+        return queryset
 
 
 class ProductCreateView(LoginRequiredMixin, generic.CreateView):
@@ -157,3 +173,38 @@ class ProductDeleteView(generic.DeleteView):
 def send_letter(request) -> None:
     send_mail('Тема', 'Тело письма', settings.EMAIL_HOST_USER, [settings.ADMIN_MAIL])
     return render(request, "home.html")
+
+@method_decorator(cache_page(60 * 15), name='dispatch')
+class CategoryProductsListView(generic.ListView):
+    model = Product
+    template_name = "category_products.html"
+    context_object_name = 'items'
+    paginate_by = 5
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categories'] = Category.objects.all().order_by('name')
+        cat_id = self.kwargs.get('pk')
+        if cat_id:
+            cat = Category.objects.get(pk=cat_id)
+            context['category'] = cat
+        return context
+
+    def get_queryset(self):
+
+        cat_id = self.kwargs.get('pk')
+        if cat_id:
+            key_name = f"products_queryset_{cat_id}"
+            queryset = cache.get(key_name)
+            if not queryset:
+                cat = Category.objects.get(pk=cat_id)
+                if cat:
+                    queryset = ProductService.products_of_category(cat_id)
+                    cache.set(key_name, queryset, 60 * 15)
+                else:
+                    queryset = Product.objects.all()
+            else:
+                queryset = Product.objects.all()
+        else:
+            queryset = Product.objects.all()
+        return queryset
