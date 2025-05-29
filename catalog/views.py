@@ -20,7 +20,6 @@ from django.core.cache import cache
 
 from .services import ProductService
 
-
 def is_moder(user) -> bool:
     if isinstance(user, AnonymousUser):
         return False

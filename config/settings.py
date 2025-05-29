@@ -23,6 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
+
 CACHE_ENABLED = True
 
 if CACHE_ENABLED:
@@ -32,6 +33,7 @@ if CACHE_ENABLED:
             'LOCATION': 'redis://127.0.0.1:6379/1',
         }
     }
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
